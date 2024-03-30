@@ -13,6 +13,8 @@ The DocOrNot dataset was built using:
 
 8k images were taken from the 8k Flickr dataset and from the RVL CDIP one.
 
+You can get it here https://huggingface.co/datasets/tarekziade/docornot
+
 ## The model
 
 The model was fine-tuned using `facebook/deit-base-distilled-patch16-224`
