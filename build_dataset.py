@@ -1,5 +1,7 @@
 import os
+import random
 from PIL import Image
+
 from datasets import (
     Dataset,
     Features,
@@ -30,21 +32,29 @@ def get_images():
             if count >= MAX_PER_SOURCE:
                 break
 
-    count = 0
     # Processing documents
-    for root, _, files in os.walk(RVL_CDIP):
-        for file in files:
-            if file.lower().endswith(".tif"):
-                file_path = os.path.join(root, file)
-                yield {
-                    "image": Image.open(file_path).convert("RGB"),
-                    "is_document": "yes",
-                }
-                count += 1
-                if count >= MAX_PER_SOURCE:
-                    break
-            if count >= MAX_PER_SOURCE:
-                break
+    dir_paths = [
+        os.path.join(RVL_CDIP, d)
+        for d in os.listdir(RVL_CDIP)
+        if os.path.isdir(os.path.join(RVL_CDIP, d))
+    ]
+
+    all_files = []
+    for dir_path in dir_paths:
+        all_files.extend(
+            [
+                os.path.join(dir_path, file)
+                for file in os.listdir(dir_path)
+                if file.lower().endswith(".tif")
+            ]
+        )
+    random.shuffle(all_files)
+
+    for file_path in all_files[:MAX_PER_SOURCE]:
+        yield {
+            "image": Image.open(file_path).convert("RGB"),
+            "is_document": "yes",
+        }
 
 
 features = Features(
