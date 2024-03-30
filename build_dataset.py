@@ -11,6 +11,7 @@ from datasets import (
 
 MAX_PER_SOURCE = 8000
 
+# these dirs are created by downloading the two datasets from Kaggle
 FLICKR8K_DIR = "./flickr8k/Images"
 RVL_CDIP = "./rvl-cdip"
 
